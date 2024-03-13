@@ -1,0 +1,8 @@
+{{ $name := .Get "name" }}
+
+<div class="quote" id="{{ $name }}">
+  {{ if not (eq $name "") }}<a class="anchor" href="#{{ $name }}">&#62;</a>{{ end }}
+  <div class="inner">
+    {{ .Inner | markdownify }}
+  </div>
+</div>

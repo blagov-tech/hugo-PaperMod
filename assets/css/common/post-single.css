@@ -252,6 +252,33 @@
     font-weight: normal;
 }
 
+.quote {
+    margin: 0 2px 25px 2px;
+    border: 1px solid var(--border);
+    background: var(--code-bg);
+    border-radius: var(--radius);
+    padding: 0.4em;
+    display: flex;
+}
+
+.dark .quote {
+    background: var(--entry);
+}
+
+.quote .inner {
+    padding: 5px 15px;
+}
+
+.quote .anchor {
+    display: inline;
+    color: var(--secondary);
+    margin-inline-start: 8px;
+    font-weight: 500;
+    user-select: none;
+    box-shadow: none;
+    padding: 5px 0px;
+}
+
 .toc {
     margin: 0 2px 40px 2px;
     border: 1px solid var(--border);
