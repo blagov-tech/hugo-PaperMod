@@ -190,12 +190,12 @@
 }
 
 .post-content code {
-    margin: auto 4px;
-    padding: 4px 6px;
-    font-size: 0.78em;
+    /* margin: auto 4px; */
+    padding: .2em .4em;
+    font-size: 85%;
     line-height: 1.5;
     background: var(--code-bg);
-    border-radius: 2px;
+    border-radius: 6px;
 }
 
 .post-content pre code {
@@ -282,13 +282,9 @@
 .rich-link {
     margin: 0 2px 25px 2px;
     border: 1px solid var(--border);
-    background: var(--code-bg);
+    background: var(--entry);
     border-radius: var(--radius);
     padding: 0.4em;
-}
-
-.dark .rich-link {
-    background: var(--entry);
 }
 
 .rich-link .inner {
@@ -313,14 +309,13 @@
 }
 
 .rich-link .link {
-    color: var(--primary);
     margin-inline-start: 16px;
     font-weight: 500;
     user-select: none;
     box-shadow: none;
-    background: var(--tertiary);
     border-radius: var(--radius);
     padding: 0.2em 0.5em;
+    border: 1px solid var(--border);
 }
 
 .link>svg {
