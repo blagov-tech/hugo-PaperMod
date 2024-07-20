@@ -279,6 +279,87 @@
     padding: 5px 0px;
 }
 
+.rich-link {
+    margin: 0 2px 25px 2px;
+    border: 1px solid var(--border);
+    background: var(--code-bg);
+    border-radius: var(--radius);
+    padding: 0.4em;
+}
+
+.dark .rich-link {
+    background: var(--entry);
+}
+
+.rich-link .inner {
+    padding: 5px 15px;
+}
+
+.rich-link .anchor {
+    margin-inline-start: 20px;
+}
+
+.rich-link h1:hover .anchor,
+.rich-link h2:hover .anchor,
+.rich-link h3:hover .anchor,
+.rich-link h4:hover .anchor,
+.rich-link h5:hover .anchor,
+.rich-link h6:hover .anchor {
+    display: inline-flex;
+    color: var(--secondary);
+    margin-inline-start: 16px;
+    font-weight: 500;
+    user-select: none;
+}
+
+.rich-link .link {
+    color: var(--primary);
+    margin-inline-start: 16px;
+    font-weight: 500;
+    user-select: none;
+    box-shadow: none;
+    background: var(--tertiary);
+    border-radius: var(--radius);
+    padding: 0.2em 0.5em;
+}
+
+.link>svg {
+    height: 0.8em;
+}
+
+.rich-link h1,
+.rich-link h2,
+.rich-link h3,
+.rich-link h4,
+.rich-link h5,
+.rich-link h6 {
+    margin: 15px 0 16px;
+}
+
+.rich-link h1 {
+    font-size: 32px;
+}
+
+.rich-link h2 {
+    font-size: 24px;
+}
+
+.rich-link h3 {
+    font-size: 16px;
+}
+
+.rich-link h4 {
+    font-size: 14px;
+}
+
+.rich-link h5 {
+    font-size: 12px;
+}
+
+.rich-link h6 {
+    font-size: 10px;
+}
+
 .toc {
     margin: 0 2px 40px 2px;
     border: 1px solid var(--border);
