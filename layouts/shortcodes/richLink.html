@@ -1,5 +1,4 @@
 {{- with $link := or (.Get "url") (.Get 0) }}
-  {{- $title := $.Get "title" }}
   {{- $tags := $.Get "tags" }}
   {{- $innerParams := newScratch }}
   {{- $innerParams.Set "content" ($.Inner | markdownify)}}
