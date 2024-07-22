@@ -1,5 +1,4 @@
-{{- /* formats .Content headings by adding an anchor */ -}}
-{{- $link := .Get "link" }}
+{{- $link := . }}
 {{- $svg := partial "svg.html" "post" }}
 {{- if strings.Contains $link "youtube.com" }}
     {{- $svg = partial "svg.html" "youtube" }}
@@ -13,6 +12,4 @@
 {{- if strings.Contains $link "music.yandex" }}
     {{- $svg = partial "svg.html" "music" }}
 {{- end }}
-{{- $re := `(<h[1-6] id="([^"]+)">)(.+)(</h[1-6]+>)` }}
-{{- $to := (printf "${1}<a class=\"link\" href=\"%s\" target=\"_blank\">%v</a>${3}${4}" $link $svg) }}
-{{ (.Get "content") | replaceRE $re $to | safeHTML }}
+{{- return $svg }}

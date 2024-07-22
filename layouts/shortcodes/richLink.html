@@ -1,5 +1,4 @@
 {{- with $link := or (.Get "url") (.Get 0) }}
-  {{- $tags := $.Get "tags" }}
   {{- $innerParams := newScratch }}
   {{- $innerParams.Set "content" ($.Inner | markdownify)}}
   {{- $innerParams.Set "link" $link }}
@@ -7,6 +6,9 @@
     <div class="inner">
       {{ partial "rich_link_headings.html" $innerParams }}
     </div>
+    <footer class="entry-footer">
+      {{- partial "rich_link_meta.html" $ -}}
+    </footer>
   </div>
 {{ else }}
   {{- errorf "The %q shortcode requires an url argument. See %s" .Name .Position }}

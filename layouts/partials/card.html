@@ -1,0 +1,55 @@
+{{- $isPage := eq .p.Kind "page" }}
+{{- $link := .p.Permalink }}
+{{- with .p.Param "link" }}
+    {{- $link = . }}
+{{- end }}
+<article class="{{ .class }}" {{- if $isPage }} id="{{ $.p.Name | anchorize }}"{{- end }}>
+    {{- $isHidden := (.p.Param "cover.hiddenInList") | default (.p.Param "cover.hidden") | default false }}
+    {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) }}
+    <header class="card-header">
+      <h2 class="card-hint-parent">
+        <span>
+            {{- if $isPage }}
+            <span class="card-hint-type" title="Type">
+                {{- partial "url_to_svg.html" (.p.Param "link") }}
+            </span>
+            {{- end }}
+            {{- .p.Title }}
+        </span>
+        {{- if $isPage }}
+        <span class="card-hint-icons">
+            <span class="card-hint" title="Open link in new tab">
+                {{- partial "svg.html" "open_in_new" }}
+            </span>
+            {{- if .p.Draft }}
+            <span class="card-hint" title="Draft">
+                {{- partial "svg.html" "draft" }}
+            </span>
+            {{- end }}
+        </span>
+        {{- else }}
+        <span class="card-hint" title="Open section">
+            {{- partial "svg.html" "chevron_right" }}
+        </span>
+        {{- end }}
+      </h2>
+      <a 
+        class="card-link" 
+        aria-label="external link to {{ .p.Title | plainify }}" 
+        href="{{- $link }}"
+        {{- if $isPage }}target="_blank"{{- end }}
+        ></a>
+    </header>
+    {{- if (ne (.p.Param "hideSummary") true) }}
+        <div class="card-content">
+        {{- if .p.Content }}
+            <p>{{ .p.Content }}</p>
+        {{- end }}
+        </div>
+    {{- end }}
+    {{- if $isPage }}
+    <footer class="card-footer">
+      {{- partial "card_meta.html" . -}}
+    </footer>
+    {{- end }}
+</article>

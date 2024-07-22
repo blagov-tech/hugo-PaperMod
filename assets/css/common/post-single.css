@@ -280,15 +280,11 @@
 }
 
 .rich-link {
-    margin: 0 2px 25px 2px;
+    margin: 0 2px 16px 2px;
     border: 1px solid var(--border);
     background: var(--entry);
     border-radius: var(--radius);
-    padding: 0.4em;
-}
-
-.rich-link .inner {
-    padding: 5px 15px;
+    padding: var(--gap);
 }
 
 .rich-link .anchor {
@@ -309,7 +305,7 @@
 }
 
 .rich-link .link {
-    margin-inline-start: 16px;
+    margin-inline-end: 16px;
     font-weight: 500;
     user-select: none;
     box-shadow: none;
@@ -328,12 +324,13 @@
 .rich-link h4,
 .rich-link h5,
 .rich-link h6 {
-    margin: 15px 0 16px;
+    margin: 0px;
+    padding: 0px 0 16px;
 }
 
 .rich-link h1 {
     font-size: 28px;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .rich-link h2 {

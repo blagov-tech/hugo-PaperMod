@@ -43,6 +43,10 @@
     border: 1px solid var(--border);
 }
 
+.entry-header {
+    position: relative;
+}
+
 .post-entry:active {
     transform: scale(0.96);
 }
@@ -80,8 +84,25 @@
     bottom: 0;
 }
 
-.entry-hint {
-    color: var(--secondary);
+.entry-hint>svg {
+    height: 1em;
+}
+
+.entry-hint-icons {
+    display: flex;
+    flex-direction: column;
+}
+
+.entry-hint-type {
+    font-weight: 500;
+    user-select: none;
+    box-shadow: none;
+    border-radius: var(--radius);
+    padding: 8px;
+}
+
+.entry-hint-type>svg {
+    height: 1em;
 }
 
 .entry-hint-parent {
