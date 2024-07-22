@@ -1,0 +1,10 @@
+{{- $subSections := partial "all_sections.html" .p }}
+{{- $subPages := .p.RegularPagesRecursive }}
+{{- if or $subSections $subPages }}
+    {{- if $subSections }}
+        <span>{{- i18n "sections" (len $subSections) }}</span>
+    {{- end }}
+    {{- if $subPages }}
+        <span>{{- i18n "links" (len $subPages) }}</span>
+    {{- end }}
+{{- end }}

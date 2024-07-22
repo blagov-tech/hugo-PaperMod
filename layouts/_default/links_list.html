@@ -4,11 +4,18 @@
 {{- partial "index_profile.html" . }}
 {{- else }} {{/* if not profileMode */}}
 
+{{ $tagPages := slice }}
+{{ $tagSections := slice }}
+{{ with $term := .Data.Term }}
+  {{ $tagPages = partial "get_taxonomies.html" (dict "term" $term "tax" "tags") }}
+  {{ $tagSections = where $tagPages "Kind" "section" }}
+{{ end }}
+
 {{- if not .IsHome | and .Title }}
 <header class="page-header">
   {{- partial "breadcrumbs.html" . }}
   <h1>
-    {{ .Title }}
+    {{ .Title }}{{ if gt ($tagPages | len ) 0 }} ({{ len $tagPages }}){{ end }}
     {{- if and (or (eq .Kind `term`) (eq .Kind `section`)) (.Param "ShowRssButtonInSectionTermList") }}
     {{- with .OutputFormats.Get "rss" }}
     <a href="{{ .RelPermalink }}" title="RSS" aria-label="RSS">
@@ -27,6 +34,13 @@
     {{ .Description | markdownify }}
   </div>
   {{- end }}
+  {{- with ($.GetTerms "tags") }}
+  <ul class="links-post-tags">
+    {{- range . }}
+    <li><a href="{{ .Permalink }}">{{ lower .LinkTitle }}</a></li>
+    {{- end }}
+  </ul>
+  {{- end }}
 </header>
 {{- end }}
 
@@ -38,7 +52,7 @@
 </div>
 {{- end }}
 
-{{- $pages := union .Sections .RegularPages }}
+{{- $pages := union (union $tagSections .Sections) .RegularPages }}
 
 {{- if .IsHome }}
 {{- $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}
@@ -61,7 +75,7 @@
 {{- if (and $.IsHome (eq $paginator.PageNumber 1) (eq $index 0) (not $user_preferred)) }}
 {{- $class = "first-entry" }}
 {{- else if $term }}
-{{- $class = "post-entry tag-entry" }}
+{{- $class = "card-post-entry tag-entry" }}
 {{- end }}
 
 {{- $card_params := dict 

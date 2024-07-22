@@ -1,0 +1,8 @@
+{{- $result := slice }}
+{{- range $i, $section := .Sections }}
+    {{- $result = $result | append $section }}
+    {{- if $section.Sections }}
+        {{ $result = $result | append (partial "all_sections.html" $section ) }}
+    {{- end }}
+{{- end }}
+{{- return $result }}

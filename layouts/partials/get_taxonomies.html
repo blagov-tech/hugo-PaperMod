@@ -1,0 +1,13 @@
+{{- $tax := .tax }}
+{{- $term := .term }}
+{{- $result := slice }}
+{{- range $i, $page := site.Pages }}
+    {{- with $terms := $page.GetTerms $tax }}
+        {{- range $j, $termPage := $terms }}
+            {{ if eq $termPage.Data.Term $term }}
+                {{ $result = $result | append $page }}
+            {{ end }}
+        {{- end }}
+    {{- end }}
+{{- end }}
+{{- return $result }}

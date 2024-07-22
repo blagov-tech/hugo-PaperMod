@@ -1,7 +1,13 @@
 {{- $isPage := eq .p.Kind "page" }}
+{{- $linked := true }}
 {{- $link := .p.Permalink }}
 {{- with .p.Param "link" }}
-    {{- $link = . }}
+    {{ if in (slice "book") . }}
+        {{- $linked = false }}
+        {{- $link = "" }}
+    {{- else }}
+        {{- $link = . }}
+    {{- end }}
 {{- end }}
 <article class="{{ .class }}" {{- if $isPage }} id="{{ $.p.Name | anchorize }}"{{- end }}>
     {{- $isHidden := (.p.Param "cover.hiddenInList") | default (.p.Param "cover.hidden") | default false }}
@@ -33,23 +39,32 @@
         </span>
         {{- end }}
       </h2>
+      {{- if $linked }}
       <a 
         class="card-link" 
         aria-label="external link to {{ .p.Title | plainify }}" 
         href="{{- $link }}"
         {{- if $isPage }}target="_blank"{{- end }}
         ></a>
+        {{- end }}
     </header>
     {{- if (ne (.p.Param "hideSummary") true) }}
+        {{- $noSummaryTypes := slice "links" }}
         <div class="card-content">
-        {{- if .p.Content }}
+        {{- if and (not (in $noSummaryTypes .p.Type)) .p.Summary }}
+            <p>{{ .p.Summary }}</p>
+        {{- else if .p.Content }}
             <p>{{ .p.Content }}</p>
         {{- end }}
         </div>
     {{- end }}
     {{- if $isPage }}
     <footer class="card-footer">
-      {{- partial "card_meta.html" . -}}
+        {{- partial "card_page_meta.html" . -}}
+    </footer>
+    {{- else }}
+    <footer class="card-footer">
+        {{- partial "card_section_meta.html" . -}}
     </footer>
     {{- end }}
 </article>

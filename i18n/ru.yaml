@@ -37,3 +37,19 @@
 
 - id: code_copied
   translation: "скопировано!"
+
+- id: sections
+  translation:
+    zero: "нет разделов"
+    one: "1 раздел"
+    few: "{{ .Count }} раздела"
+    many: "{{ .Count }} разделов"
+    other: "{{ .Count }} раздела"
+
+- id: links
+  translation:
+    zero: "нет ссылок"
+    one: "1 ссылка"
+    few: "{{ .Count }} ссылки"
+    many: "{{ .Count }} ссылок"
+    other: "{{ .Count }} ссылки"

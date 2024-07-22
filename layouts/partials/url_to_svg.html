@@ -1,15 +1,14 @@
 {{- $link := . }}
 {{- $svg := partial "svg.html" "post" }}
-{{- if strings.Contains $link "youtube.com" }}
+{{- if eq $link "book" }}
+    {{- $svg = partial "svg.html" "book" }}
+{{- else if strings.Contains $link "youtube.com" }}
     {{- $svg = partial "svg.html" "youtube" }}
-{{- end }}
-{{- if strings.Contains $link "github.com" }}
+{{- else if strings.Contains $link "github.com" }}
     {{- $svg = partial "svg.html" "github" }}
-{{- end }}
-{{- if strings.Contains $link "//t.me/" }}
+{{- else if strings.Contains $link "//t.me/" }}
     {{- $svg = partial "svg.html" "telegram" }}
-{{- end }}
-{{- if strings.Contains $link "music.yandex" }}
+{{- else if strings.Contains $link "music.yandex" }}
     {{- $svg = partial "svg.html" "music" }}
 {{- end }}
 {{- return $svg }}
