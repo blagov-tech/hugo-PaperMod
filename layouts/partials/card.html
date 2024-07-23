@@ -20,7 +20,9 @@
                 {{- partial "url_to_svg.html" (.p.Param "link") }}
             </span>
             {{- end }}
+            {{- if .p.Param "deprecated" }}Deprecated: <s>{{- end}}
             {{- .p.Title }}
+            {{- if .p.Param "deprecated" }}</s>{{- end}}
         </span>
         {{- if $isPage }}
         <span class="card-hint-icons">
@@ -68,3 +70,12 @@
     </footer>
     {{- end }}
 </article>
+{{- $filename := path.Base .p.RelPermalink }}
+{{- $filename = strings.TrimSuffix "/" $filename }}
+<span class="card-hidden-link">
+    {{- if $isPage }}
+        <a class="card-hidden-link-text" href="{{- $.p.Permalink }}">{{- $filename }}</a>
+    {{- else }}
+        <p>&nbsp;</p>
+    {{- end }}
+</span>

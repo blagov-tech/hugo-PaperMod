@@ -8,7 +8,7 @@
     {{- $svg = partial "svg.html" "github" }}
 {{- else if strings.Contains $link "//t.me/" }}
     {{- $svg = partial "svg.html" "telegram" }}
-{{- else if strings.Contains $link "music.yandex" }}
+{{- else if partial "any_contains.html" (slice $link "music.yandex" "podcast.ru") }}
     {{- $svg = partial "svg.html" "music" }}
 {{- end }}
 {{- return $svg }}

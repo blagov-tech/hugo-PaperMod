@@ -1,9 +1,14 @@
 {{- $filename := path.Base .p.RelPermalink }}
 {{- $filename = strings.TrimSuffix "/" $filename }}
-<a class="card-anchor" href="#{{- $.p.Name | anchorize }}"># В ТЕГАХ ВЕСТИ НА СЕКЦИЮ</a>
+{{- if $.isTagPage }}
+<a class="card-anchor" href="{{ $.p.Parent.Permalink }}">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M240-240v-480h80v480h-80Zm440 0L440-480l240-240 56 56-184 184 184 184-56 56Z"/></svg>
+</a>
+{{- else }}
+<a class="card-anchor" href="#{{- $.p.Name | anchorize }}">#</a>
+{{- end }}
 {{- with $.p.GetTerms "tags" }}
     {{- range . }}
         <span><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></span>
     {{- end }}
 {{- end }}
-<a class="card-hidden-link" href="{{- $.p.Permalink }}">{{- $filename }} ПЕРЕНЕСТИ ВНИЗ</a>

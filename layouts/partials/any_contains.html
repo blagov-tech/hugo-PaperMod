@@ -1,0 +1,10 @@
+{{- $contains := false }}
+{{- $str := index . 0 }}
+{{- $values := after 1 . }}
+{{- range $i, $substr := $values }}
+    {{- if strings.Contains $str $substr }}
+        {{- $contains = true }}
+        {{- break }}
+    {{- end }}
+{{- end }}
+{{- return $contains }}

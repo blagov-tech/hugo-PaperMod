@@ -10,12 +10,13 @@
   {{ $tagPages = partial "get_taxonomies.html" (dict "term" $term "tax" "tags") }}
   {{ $tagSections = where $tagPages "Kind" "section" }}
 {{ end }}
+{{ $isTagPage := gt ($tagPages | len ) 0 }}
 
 {{- if not .IsHome | and .Title }}
 <header class="page-header">
   {{- partial "breadcrumbs.html" . }}
   <h1>
-    {{ .Title }}{{ if gt ($tagPages | len ) 0 }} ({{ len $tagPages }}){{ end }}
+    {{ .Title }}{{ if $isTagPage }} ({{ len $tagPages }}){{ end }}
     {{- if and (or (eq .Kind `term`) (eq .Kind `section`)) (.Param "ShowRssButtonInSectionTermList") }}
     {{- with .OutputFormats.Get "rss" }}
     <a href="{{ .RelPermalink }}" title="RSS" aria-label="RSS">
@@ -81,6 +82,7 @@
 {{- $card_params := dict 
   "class" $class 
   "p" .
+  "isTagPage" $isTagPage
 }}
 {{- partial "card.html" $card_params }}
 {{- end }}

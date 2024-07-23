@@ -4,7 +4,6 @@
 
 .card-post-entry {
     position: relative;
-    margin-bottom: var(--gap);
     padding: var(--gap);
     background: var(--entry);
     border-radius: var(--radius);
@@ -305,6 +304,14 @@
 }
 
 .card-hidden-link {
+    margin-bottom: calc(var(--gap) - 1em);
+    display: flex;
+    justify-content: right;
+    font-size: 10px;
+    padding: 0 calc(var(--gap)/2) 0 calc(var(--gap)/2);
+}
+
+.card-hidden-link-text {
     color: var(--tertiary);
 }
 

@@ -41,10 +41,10 @@
 - id: sections
   translation:
     zero: "нет разделов"
-    one: "1 раздел"
-    few: "{{ .Count }} раздела"
-    many: "{{ .Count }} разделов"
-    other: "{{ .Count }} раздела"
+    one: "1 подраздел"
+    few: "{{ .Count }} подраздела"
+    many: "{{ .Count }} подразделов"
+    other: "{{ .Count }} подраздела"
 
 - id: links
   translation:
