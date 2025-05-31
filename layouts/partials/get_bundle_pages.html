@@ -1,0 +1,12 @@
+{{- $bundleTags := ($.GetTerms "tags") }}
+{{- $enoughtTags := gt ($bundleTags | len ) 1 }}
+{{- $resultPages := slice }}
+{{- if $enoughtTags }}
+  {{- $resultPages = partial "get_taxonomies.html" (dict "term" (index $bundleTags 0).Name "tax" "tags") }}
+  {{- range $bundleTags }}
+    {{- $tagPages := partial "get_taxonomies.html" (dict "term" .Name "tax" "tags") }}
+    {{- $resultPages = intersect $resultPages $tagPages }}
+  {{- end }}
+{{- end }}
+{{- $resultPages = $resultPages | complement (slice .)}}
+{{- return $resultPages }}

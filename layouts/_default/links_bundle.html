@@ -4,46 +4,22 @@
 {{- partial "index_profile.html" . }}
 {{- else }} {{/* if not profileMode */}}
 
-{{ $tagPages := slice }}
-{{ $tagSections := slice }}
-{{ with $term := .Data.Term }}
-  {{ $tagPages = partial "get_taxonomies.html" (dict "term" $term "tax" "tags") }}
-  {{ $tagSections = where $tagPages "Kind" "section" }}
-{{ end }}
-{{ $isTagPage := gt ($tagPages | len ) 0 }}
-
-{{- if not .IsHome | and .Title }}
 <header class="page-header">
   {{- partial "breadcrumbs.html" . }}
-  <h1>
-    {{ .Title }}{{ if $isTagPage }} ({{ len $tagPages }}){{ end }}
-    {{- if and (or (eq .Kind `term`) (eq .Kind `section`)) (.Param "ShowRssButtonInSectionTermList") }}
-    {{- with .OutputFormats.Get "rss" }}
-    <a href="{{ .RelPermalink }}" title="RSS" aria-label="RSS">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" height="23">
-        <path d="M4 11a9 9 0 0 1 9 9" />
-        <path d="M4 4a16 16 0 0 1 16 16" />
-        <circle cx="5" cy="19" r="1" />
-      </svg>
-    </a>
+  {{- if .Title }}<h1>{{ .Title }}</h1>{{- end }}
+  {{- with ($.GetTerms "tags") }}
+  <ul class="links-post-tags">
+    {{- range . }}
+    <li><a href="{{ .Permalink }}">{{ .Name }}</a></li>
     {{- end }}
-    {{- end }}
-  </h1>
+  </ul>
+  {{- end }}
   {{- if .Description }}
   <div class="post-description">
     {{ .Description | markdownify }}
   </div>
   {{- end }}
-  {{- with ($.GetTerms "tags") }}
-  <ul class="links-post-tags">
-    {{- range . }}
-    <li><a href="{{ .Permalink }}">{{ lower .LinkTitle }}</a></li>
-    {{- end }}
-  </ul>
-  {{- end }}
 </header>
-{{- end }}
 
 {{- if .Content }}
 <div class="post-content">
@@ -53,13 +29,7 @@
 </div>
 {{- end }}
 
-{{- $pages := union (union $tagSections .Sections) .RegularPages }}
-
-{{- if .IsHome }}
-{{- $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}
-{{- $pages = where $pages "Params.showInHomeList" "=" "true"  }}
-{{- $pages = union .Sections $pages }}
-{{- end }}
+{{- $pages := partial "get_bundle_pages.html" . }}
 
 {{- $paginator := .Paginate $pages }}
 
@@ -82,10 +52,10 @@
 {{- $card_params := dict 
   "class" $class 
   "p" .
-  "isTagPage" $isTagPage
+  "isTagPage" false
 }}
 {{- partial "card.html" $card_params }}
-{{- end }} {{/* end range */}}
+{{- end }}
 
 {{- if gt $paginator.TotalPages 1 }}
 <footer class="page-footer">

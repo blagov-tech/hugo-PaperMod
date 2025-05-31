@@ -1,0 +1,6 @@
+{{- $subPages := partial "get_bundle_pages.html" .p }}
+{{- if $subPages }}
+    {{- if $subPages }}
+        <span>{{- i18n "links" (len $subPages) }}</span>
+    {{- end }}
+{{- end }}
