@@ -72,7 +72,13 @@
 </article>
 {{- $filename := path.Base .p.RelPermalink }}
 {{- $filename = strings.TrimSuffix "/" $filename }}
-<span class="card-hidden-link">
+{{- $page := .p }}
+<span class="card-hidden-params">
+    {{ with and $page.Lastmod $isPage }}
+        <p class="card-hidden-date-text">{{ $page.Lastmod | time.Format (default "January 2, 2006" site.Params.DateFormat) }}</p>
+    {{- else }}
+        <p>&nbsp;</p>
+    {{ end }}
     {{- if $isPage }}
         <a class="card-hidden-link-text" href="{{- $.p.Permalink }}">{{- $filename }}</a>
     {{- else }}

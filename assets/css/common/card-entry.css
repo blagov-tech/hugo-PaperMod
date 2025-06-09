@@ -303,15 +303,19 @@
     justify-content: space-between;
 }
 
-.card-hidden-link {
+.card-hidden-params {
     margin-bottom: calc(var(--gap) - 1em);
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
     font-size: 10px;
     padding: 0 calc(var(--gap)/2) 0 calc(var(--gap)/2);
 }
 
 .card-hidden-link-text {
+    color: var(--tertiary);
+}
+
+.card-hidden-date-text {
     color: var(--tertiary);
 }
 
