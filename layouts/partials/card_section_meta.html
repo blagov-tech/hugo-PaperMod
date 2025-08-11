@@ -5,6 +5,11 @@
         <span>{{- i18n "sections" (len $subSections) }}</span>
     {{- end }}
     {{- if $subPages }}
-        <span>{{- i18n "links" (len $subPages) }}</span>
+        <span class="card-anchor">{{- i18n "links" (len $subPages) }}</span>
+    {{- end }}
+    {{- with $.p.GetTerms "tags" }}
+        {{- range . }}
+            <span><a href="{{ .RelPermalink }}">{{ .Name }}</a></span>
+        {{- end }}
     {{- end }}
 {{- end }}
