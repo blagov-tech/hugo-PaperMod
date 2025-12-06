@@ -41,6 +41,45 @@ window.onload = function () {
                             ignoreLocation: params.fuseOpts.ignorelocation ?? true
                         }
                     }
+                    if (options.keys.includes('rev_title')) {
+                        // Build mapping for en <-> ru layouts
+                        const en = '`qwertyuiop[]asdfghjkl;\'zxcvbnm,./~QWERTYUIOP{}ASDFGHJKL:"ZXCVBNM<>?';
+                        const ru = 'ёйцукенгшщзхъфывапролджэячсмитьбю./ЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,?';
+
+                        // Create maps in both directions
+                        const toRu = {};
+                        const toEn = {};
+                        for (let i = 0; i < en.length; i++) {
+                            toRu[en[i]] = ru[i];
+                        }
+                        for (let i = 0; i < ru.length; i++) {
+                            toEn[ru[i]] = en[i];
+                        }
+
+                        // Function to convert a string to the "opposite" keyboard layout
+                        function convertLayout(str) {
+                            let res = '';
+                            for (const ch of str) {
+                                if (toRu.hasOwnProperty(ch)) {
+                                    res += toRu[ch];
+                                } else if (toEn.hasOwnProperty(ch)) {
+                                    res += toEn[ch];
+                                } else {
+                                    res += ch;
+                                }
+                            }
+                            return res;
+                        }
+
+                        // Add rev_title to each item in data
+                        if (Array.isArray(data)) {
+                            for (let i = 0; i < data.length; i++) {
+                                if (typeof data[i].title === 'string') {
+                                    data[i].rev_title = convertLayout(data[i].title);
+                                }
+                            }
+                        }
+                    }
                     fuse = new Fuse(data, options); // build the index from the json file
                 }
             } else {
@@ -86,10 +125,25 @@ sInput.onkeyup = function (e) {
         if (results.length !== 0) {
             // build our html if result exists
             let resultSet = ''; // our results bucket
+            let lim = params.fuseOpts.searchResultsLimit ?? 100;
 
-            for (let item in results) {
-                resultSet += `<li class="post-entry"><header class="entry-header">${results[item].item.title}&nbsp;»</header>` +
-                    `<a href="${results[item].item.permalink}" aria-label="${results[item].item.title}"></a></li>`
+            for (let item in results.slice(0, lim)) {
+                let isPage = results[item].item.is_page;
+                let link = isPage ? results[item].item.link : results[item].item.permalink;
+                resultSet += `<li class="card-post-entry"><h3 class="card-header card-hint-parent">${results[item].item.title}` 
+                if (isPage) {
+                    let openInNew = `<svg fill="currentColor" viewBox="0 -960 960 960"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"/></svg>`
+                    resultSet += `<span class="card-hint-icons"><span class="card-hint" title="Open link in new tab">${openInNew}</span></span>`
+                    resultSet += `</header>`
+                    resultSet += `<a href="${link}" aria-label="${results[item].item.title}" target="_blank"></a>`
+                } else {
+                    resultSet += `</header>`
+                    resultSet += `<a href="${link}" aria-label="${results[item].item.title}"></a>`
+                }
+                resultSet += `</li>`
+            }
+            if (results.length > lim) {
+                resultSet += `<li class="card-post-entry"><h3 class="card-header card-hint-parent">${results.length - lim} more results...</h3></li>`
             }
 
             resList.innerHTML = resultSet;
